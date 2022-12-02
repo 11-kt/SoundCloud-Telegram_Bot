@@ -1,6 +1,6 @@
 # Первая стадия
 FROM python:3.10 AS build
-WORKDIR /src
+
 COPY requirements.txt requirements.txt
 
 # Скачиваем зависимости
@@ -11,7 +11,7 @@ FROM python:3.10-slim
 
 # Копируем необходимые зависимости
 COPY --from=build /root/.local /root/.local
-COPY . .
+COPY src .
 
 # Обновляем путь
 ENV PATH=/root/.local:$PATH
