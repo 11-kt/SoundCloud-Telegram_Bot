@@ -7,6 +7,7 @@ class SCBot:
     def __init__(self):
         self.token = os.environ['BOTTOKEN']
         self.bot = telebot.TeleBot(token=self.token)
+        self.url = None
 
         # Ответы бота
         @self.bot.message_handler(content_types=['text'])
@@ -14,6 +15,9 @@ class SCBot:
 
             if message.text.lower() == 'привет':
                 self.hello_word(message)
+
+            else:
+                self.url = message.text
 
     # Приветствие
     def hello_word(self, message):
