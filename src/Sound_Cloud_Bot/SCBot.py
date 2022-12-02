@@ -58,3 +58,17 @@ class SCBot:
     # Поиск трека
     def dwn_track(self, message):
         self.downloader.search(url=message.text)
+
+    # Выбор формата загрузки
+    def pick_format(self, message):
+        formats = []
+        markup = telebot.types.InlineKeyboardMarkup()
+        for i in range(len(self.downloader.info['formats'])):
+            type_file_name = self.downloader.info['formats'][i]['format_id']
+            formats.append(type_file_name)
+            markup.add(telebot.types.InlineKeyboardButton(type_file_name, callback_data=type_file_name))
+
+        self.bot.send_message(message.chat.id, text='Выберите формат:\n\t- hls_mp3_128, hls_opus_64 '
+                                                    '- стриминговый формат, \n\t  нужно самостоятельно конвертировать '
+                                                    '(например в VLC \n\t  плеере)'
+                                                    '\n\t- http_mp3_128 - .mp3 файл', reply_markup=markup)
