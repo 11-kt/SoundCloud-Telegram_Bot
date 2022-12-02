@@ -20,7 +20,7 @@ class SCBot:
                 self.hello_word(message)
 
             elif is_dwn and is_true_url:
-                self.url = message.text
+                self.dwn_track(message)
 
             elif ~is_dwn and is_true_url:
                 self.bot.send_message(message.from_user.id, 'Некорректная ссылка на трек!')
@@ -58,6 +58,7 @@ class SCBot:
     # Поиск трека
     def dwn_track(self, message):
         self.downloader.search(url=message.text)
+        self.pick_format(message)
 
     # Выбор формата загрузки
     def pick_format(self, message):
