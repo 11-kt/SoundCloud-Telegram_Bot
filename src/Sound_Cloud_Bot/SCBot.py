@@ -13,11 +13,20 @@ class SCBot:
         @self.bot.message_handler(content_types=['text'])
         def chatting(message):
 
+            is_dwn, is_true_url = self.url_checker(message.text)
+
             if message.text.lower() == 'привет':
                 self.hello_word(message)
 
-            else:
+            elif is_dwn and is_true_url:
                 self.url = message.text
+
+            elif ~is_dwn and is_true_url:
+                self.bot.send_message(message.from_user.id, 'Некорректная ссылка на трек!')
+                self.bot.send_message(message.from_user.id, 'Возможно это ссылка на артиста, плейлист или альбом')
+
+            else:
+                self.bot.send_message(message.from_user.id, "Для начала нужно поздороваться")
 
     # Приветствие
     def hello_word(self, message):
