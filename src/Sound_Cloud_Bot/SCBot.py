@@ -29,3 +29,18 @@ class SCBot:
                                                     'на трек!')
         self.bot.send_message(message.from_user.id, 'Например:\nhttps://soundcloud.com/liluzivert/moment-of-clarity',
                               reply_markup=markup)
+
+    # Проверка корректности введенной ссылки
+    @staticmethod
+    def url_checker(message):
+        mes_list = message.split('/')
+        ignore_pages = ['sets', 'you', 'discover', 'albums']
+        is_url = 0
+
+        if (mes_list[0] == 'https:' or mes_list[0] == 'http:') and mes_list[2] == 'soundcloud.com':
+            is_url = 1
+            if mes_list[3] in ignore_pages or len(mes_list) < 5 or mes_list[4] in ignore_pages:
+                return False, is_url
+            else:
+                return True, is_url
+        return False, is_url
