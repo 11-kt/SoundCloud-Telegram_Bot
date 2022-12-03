@@ -13,4 +13,15 @@ class SCBot:
         def chatting(message):
 
             if message.text.lower() == 'привет':
-                self.bot.send_message(message.from_user.id, 'Привет!')
+                self.hello_word(message)
+
+    # Приветствие
+    def hello_word(self, message):
+        markup = telebot.types.InlineKeyboardMarkup()
+        markup.add(telebot.types.InlineKeyboardButton('LiL Uzi Vert',
+                                                      url='https://soundcloud.com/liluzivert/moment-of-clarity'))
+        self.bot.send_message(message.from_user.id, 'Привет!')
+        self.bot.send_message(message.from_user.id, 'Чтобы мной воспользоваться, пожалуйста, отправь ссылку '
+                                                    'на трек!')
+        self.bot.send_message(message.from_user.id, 'Например:\nhttps://soundcloud.com/liluzivert/moment-of-clarity',
+                              reply_markup=markup)
