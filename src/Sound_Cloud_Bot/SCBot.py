@@ -100,3 +100,7 @@ class SCBot:
         self.bot.send_audio(message.chat.id, audio)
         audio.close()
         os.remove(track_name)
+
+    # Запуск бота
+    def start(self):
+        self.bot.polling()
