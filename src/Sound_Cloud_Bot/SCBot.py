@@ -20,7 +20,7 @@ class SCBot:
                 self.hello_word(message)
 
             elif is_dwn and is_true_url:
-                self.url = message.text
+                self.dwn_track(message)
 
             elif ~is_dwn and is_true_url:
                 self.bot.send_message(message.from_user.id, 'Некорректная ссылка на трек!')
@@ -28,6 +28,25 @@ class SCBot:
 
             else:
                 self.bot.send_message(message.from_user.id, "Для начала нужно поздороваться")
+
+        # Обработка выбора формата трека
+        @self.bot.callback_query_handler(func=lambda call: True)
+        def callback_inline(call):
+            if call.message:
+                if call.data == 'hls_mp3_128':
+                    self.bot.edit_message_text(chat_id=call.message.chat.id,
+                                               message_id=call.message.message_id, text='hls_mp3_128')
+                    self.send_track(call.message, 'hls_mp3_128')
+
+                if call.data == 'hls_opus_64':
+                    self.bot.edit_message_text(chat_id=call.message.chat.id,
+                                               message_id=call.message.message_id, text='hls_opus_64')
+                    self.send_track(call.message, 'hls_opus_64')
+
+                if call.data == 'http_mp3_128':
+                    self.bot.edit_message_text(chat_id=call.message.chat.id,
+                                               message_id=call.message.message_id, text='http_mp3_128')
+                    self.send_track(call.message, 'http_mp3_128')
 
     # Приветствие
     def hello_word(self, message):
@@ -73,3 +92,11 @@ class SCBot:
                                                     '- стриминговый формат, \n\t  нужно самостоятельно конвертировать '
                                                     '(например в VLC \n\t  плеере)'
                                                     '\n\t- http_mp3_128 - .mp3 файл', reply_markup=markup)
+
+    # Отправление полученного трека пользователю
+    def send_track(self, message, track_format):
+        track_name = self.downloader.download(track_format)
+        audio = open(track_name, 'rb')
+        self.bot.send_audio(message.chat.id, audio)
+        audio.close()
+        os.remove(track_name)
