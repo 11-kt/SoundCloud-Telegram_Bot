@@ -1,5 +1,6 @@
 import telebot
 import os
+from SCDownloader import SoundCloud
 
 
 class SCBot:
@@ -7,7 +8,7 @@ class SCBot:
     def __init__(self):
         self.token = os.environ['BOTTOKEN']
         self.bot = telebot.TeleBot(token=self.token)
-        self.url = None
+        self.downloader = SoundCloud()
 
         # Ответы бота
         @self.bot.message_handler(content_types=['text'])
@@ -53,3 +54,7 @@ class SCBot:
             else:
                 return True, is_url
         return False, is_url
+
+    # Поиск трека
+    def dwn_track(self, message):
+        self.downloader.search(url=message.text)
