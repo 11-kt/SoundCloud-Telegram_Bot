@@ -58,6 +58,7 @@ class SCBot:
     # Поиск трека
     def dwn_track(self, message):
         self.downloader.search(url=message.text)
+        self.pick_format(message)
 
     # Выбор формата загрузки
     def pick_format(self, message):
