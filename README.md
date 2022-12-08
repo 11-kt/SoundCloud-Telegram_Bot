@@ -1,6 +1,13 @@
 # SoundCloud Downloader
 Telegram bot for downloading music from soundcloud.
 
+## Тесты
+
+Ветка `main`: [![Tests_pipeline](https://github.com/11-kt/SoundCloud-Telegram_Bot/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/11-kt/SoundCloud-Telegram_Bot/actions/workflows/tests.yml)
+
+Ветка `develop`: [![Tests_pipeline](https://github.com/11-kt/SoundCloud-Telegram_Bot/actions/workflows/tests.yml/badge.svg?branch=develop)](https://github.com/11-kt/SoundCloud-Telegram_Bot/actions/workflows/tests.yml)
+
+
 ### Requirements
 `requirements.txt`.
 
